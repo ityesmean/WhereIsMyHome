@@ -57,14 +57,35 @@
 
 <script>
 export default {
-    data() {
+    name: 'SignUpVue',
+    data: function() {
         return {
-            contents: null
+            member: ''
         }
     },
-
+    created: function() {
+        this.joinMember()
+    },
     methods: {
-        
+        joinMember: function() {
+            this.$axios.post('http://localhost/admin/member', {
+                id: this.id,
+                pw: this.pw,
+                name: this.name,
+                addr: this.addr,
+                phone: this.phone
+            })
+                .then(response => {
+                    console.log(response)
+                    this.$router.push({
+                        name: "member"
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                
+        }
     }
 }
 </script>

@@ -41,7 +41,7 @@
 
 <script>
 export default {
-
+    name: "PasswordVue"
 }
 </script>
 

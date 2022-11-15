@@ -3,19 +3,31 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/aptcost">aptCost</router-link> |
-      <router-link to="/signup">signUp</router-link> |
-      <router-link to="/login">login</router-link> |
-      <router-link to="/mypage">myPage</router-link> |
-      <router-link to="/update">update</router-link> |
-      <router-link to="/password">password</router-link> |
-      <router-link to="/aptdetailform">aptDetailForm</router-link>
+      <router-link to="/member/signup">signUp</router-link> |
+      <router-link to="/member/login">login</router-link> |
+      <router-link to="/member/mypage">myPage</router-link> |
+      <router-link to="/member/update">update</router-link> |
+      <router-link to="/member/password">password</router-link> |
+      <router-link to="/aptdetailform">aptDetailForm</router-link> -->
     </nav>
+    <header-vue></header-vue>
+    <router-view></router-view>
+    <footer-vue></footer-vue>
     <router-view/>
   </div>
 </template>
 
 <script>
-  
+import HeaderVue from '@/components/common/HeaderVue.vue'
+import FooterVue from "@/components/common/FooterVue.vue"
+
+export default {
+  name: 'App',
+  components: {
+    HeaderVue,
+    FooterVue
+  },
+}
 </script>
 
 
