@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <p>
-                                    <small>이미 계정이 있으시다면, <a href="${root }/member/login">로그인</a></small>
+                                    <small>이미 계정이 있으시다면, <router-link to="/login">로그인</router-link></small>
                                 </p>
                             </div>
                         </form>
@@ -57,7 +57,15 @@
 
 <script>
 export default {
+    data() {
+        return {
+            contents: null
+        }
+    },
 
+    methods: {
+        
+    }
 }
 </script>
 
