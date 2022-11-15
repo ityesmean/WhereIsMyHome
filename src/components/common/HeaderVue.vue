@@ -20,13 +20,14 @@
         <div class="container">
             <div class="site-navigation">
                 <a href="/" class="logo m-0">구해줘, 홈즈<span class="text-primary">.</span></a>
+                <!-- <router-link to="/" class="logo m-0">구해줘, 홈즈<span class="text-primary">.</span></router-link> -->
 
                 <ul class="js-clone-nav d-none d-lg-inline-block text-left float-right site-menu">
                 
                     <!-- <li><a id="signUp" href="${root}/signUp.jsp">Sign up</a></li>  -->
                     
-                    <li><router-link to="/signup">Sign up</router-link></li> 
-                    <li class="cta-button active"> <router-link to="/login">Login</router-link></li>
+                    <li><router-link to="/member/signup">Sign up</router-link></li> 
+                    <li class="cta-button active"> <router-link to="/member/login">Login</router-link></li>
 
 
                     

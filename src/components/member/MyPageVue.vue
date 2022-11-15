@@ -107,7 +107,7 @@ export default {
         getMember: function() {
             this.$axios.get('http://localhost/admin/member/ssafy')
                 .then(response => {
-                    console.log(JSON.stringify(response))
+                    console.log(response)
                     this.member = response.data})
                 .catch(error => {
                     console.log(error)
