@@ -15,33 +15,36 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="text-black" for="id">아이디</label>
-                                        <input type="text" class="form-control" id="id" name="id"
-                                            value="${member.getId()}" readonly>
+                                        <input type="text" class="form-control" id="id"
+                                        readonly ref="refId">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="pw">비밀번호</label>
-                                        <input type="text" class="form-control" id="pw" name="pw"
-                                            value="${member.getPw()}">
+                                        <input type="text" class="form-control" id="pw"
+                                        ref="refPw">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="name">이름</label>
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="${member.getName()}">
+                                        <input type="text" class="form-control" id="name"
+                                        ref="refName">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="addr">주소</label>
-                                        <input type="text" class="form-control" id="addr" name="addr"
-                                            value="${member.getAddr()}">
+                                        <input type="text" class="form-control" id="addr"
+                                        ref="refAddr">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="phone">전화번호</label>
-                                        <input type="text" class="form-control" id="phone" name="phone"
-                                            value="${member.getPhone()}">
+                                        <input type="text" class="form-control" id="phone"
+                                        ref="refPhone">
                                     </div>
                                 </div>
                             </div>
-
-                            <input type="button" id="updateInfo" class="btn btn-primary mb-4" value="수정">
+                            <!-- <router-link to="/member/mypage"> -->
+                                <button id="btn-update" @click="updateMember" class="btn btn-primary mb-4" >
+                                    수정
+                                </button>
+                            <!-- </router-link> -->
                             <button type="button" onclick="location.href = '${root }/member/list?id=${login.id }'"
                                 class="btn btn-primary mb-4">돌아가기</button>
                         </form>
@@ -54,7 +57,61 @@
 
 <script>
 export default {
-    name: "UpdateVue"
+    name: "UpdateVue",
+    data: function() {
+        return {
+            member: {
+                
+            }
+        }
+    },
+    created: function() {
+        this.getMember()
+    },
+    methods: {
+        getMember: function() {
+            this.$axios.get('http://localhost/admin/member/ssafy')
+                .then(response => {
+                    this.member = response.data
+                    this.$refs.refId.value = this.member.id;
+                    this.$refs.refPw.value = this.member.pw;
+                    this.$refs.refName.value = this.member.name;
+                    this.$refs.refAddr.value = this.member.addr;
+                    this.$refs.refPhone.value = this.member.phone;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                
+        },
+
+        updateMember: function (e) {
+            // this.validationCheck();
+            e.preventDefault();
+            this.$axios.put('http://localhost/admin/member', {
+                id: this.$refs.refId.value,
+                pw: this.$refs.refPw.value,
+                name: this.$refs.refName.value,
+                addr: this.$refs.refAddr.value,
+                phone: this.$refs.refPhone.value
+            })
+                .then(response => {
+                    console.log(response)
+                    this.$router.push({
+                        name: "mypage"
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+            
+
+        
+                
+        },
+    
+    }
 }
 </script>
 

@@ -10,7 +10,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5 bg-white p-5">
                         <form id="form-update" class="contact-form" data-aos="fade-up" data-aos-delay="200"
-                            action="${root}/member/updatepage?id=${member.getId()}" method="post">
+                            action="" method="post">
                             <!-- <input type="hidden" name="action" value="updateform">
                 -->
                             <!-- <input type="hidden" name="id" value="${member.getId() }"> -->
@@ -57,11 +57,21 @@
                                 <div class="accordion" id="accordion_1">
                                     <div class="accordion-item">
                                         <!-- <button type="button" class="btn btn-primary mb-4">수정</button> -->
-                                        <input type="submit" id="btn-update" class="btn btn-primary mb-4" value="수정">
-                                        <button type="button" class="btn btn-primary mb-4" data-toggle="collapse"
+                                        <!-- <input type="submit" id="btn-update" class="btn btn-primary mb-4" value="수정"> -->
+                                        <router-link to="/member/update">
+                                            <button id="btn-update" class="btn btn-primary mb-4">
+                                                수정
+                                            </button>
+                                        </router-link>
+
+                                        <!-- 탈퇴 버튼 -->
+                                        <button id="btn-delete" @click="deleteMember" class="btn btn-primary mb-4" >
+                                    삭제</button>
+                                <!--data-toggle="collapse"
                                             data-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">탈퇴</button>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                            aria-controls="collapseOne" -->
+
+                                        <!-- <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                                             data-parent="#accordion_1">
                                             <div class="accordion-body">
                                                 <label class="text-black">정말 탈퇴하시겠습니까?</label>
@@ -80,7 +90,7 @@
                                                     </div>
                                                 </nav>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                         </form>
@@ -95,25 +105,41 @@
 <script>
 export default {
     name: 'MyPageVue',
-    data: function() {
+    data: function () {
         return {
             member: ''
         }
     },
-    created: function() {
+    created: function () {
         this.getMember()
     },
     methods: {
-        getMember: function() {
+        getMember: function () {
             this.$axios.get('http://localhost/admin/member/ssafy')
                 .then(response => {
                     console.log(response)
-                    this.member = response.data})
+                    this.member = response.data
+                })
                 .catch(error => {
                     console.log(error)
                 })
-                
-        }
+
+        },
+
+        deleteMember: function (e) {
+            e.preventDefault();
+            this.$axios.delete('http://localhost/admin/member/ssafy', {
+            })
+                .then(response => {
+                    console.log(response)
+                    this.$router.push({
+                        name: "index"
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
     }
 }
 </script>
