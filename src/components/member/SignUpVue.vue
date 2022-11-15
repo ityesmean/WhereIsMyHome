@@ -62,45 +62,65 @@
 <script>
 export default {
     name: 'SignUpVue',
-    data: function() {
+    data: function () {
         return {
             id: null,
             pw: null,
             name: null,
             addr: null,
             phone: null,
-        }
+            errors: [],
+            errorshow: false
+        }   
     },
     created: function() {
         this.joinMember()
     },
     methods: {
-        joinMember: function () {
-
+        
+        validationCheck() {
+            this.errors = [];
+            if (!this.id) {
+                this.error.push("아이디를 입력해주세요.");
+            }
+            if (!this.pw) {
+                this.error.push("비밀번호를 입력해주세요.");
+            }
+            if (!this.name) {
+                this.error.push("이름을 입력해주세요.");
+            }
+            if (!this.addr) {
+                this.error.push("주소를 입력해주세요.");
+            }
+            if (!this.phone) {
+                this.error.push("전화번호를 입력해주세요.");
+            }
             
-            // console.log(this.id);
-            // console.log(this.pw);
-            // console.log(this.name);
-            // console.log(this.addr);
-            // console.log(this.phone);
+        },
+        joinMember: function () {
+            this.validationCheck();
+
+            if (this.errors.length == 0) {
+                this.$axios.post('http://localhost/admin/member', {
+                    id: this.id,
+                    pw: this.pw,
+                    name: this.name,
+                    addr: this.addr,
+                    phone: this.phone
+                })
+                    .then(response => {
+                        console.log(response)
+                        this.$router.push({
+                            name: "login"
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+            }
 
 
-            this.$axios.post('http://localhost/admin/member', {
-                id: this.id,
-                pw: this.pw,
-                name: this.name,
-                addr: this.addr,
-                phone: this.phone
-            })
-                .then(response => {
-                    console.log(response)
-                    this.$router.push({
-                        name: "login"
-                    });
-                })
-                .catch(error => {
-                    console.log(error)
-                })
                 
         }
     }
