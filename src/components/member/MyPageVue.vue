@@ -20,35 +20,35 @@
                                             <label class="text-black" for="id">아이디</label>
                                             <!-- <div id="id"></div> -->
                                             <div>
-                                                <!-- ${member.getId()} -->
+                                                {{member.id}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="password">비밀번호</label>
                                             <!-- <div id="password"></div> -->
                                             <div>
-                                                <!-- ${member.getPw()} -->
+                                                {{member.pw}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="name">이름</label>
                                             <!-- <div id="name"></div> -->
                                             <div>
-                                                <!-- ${member.getName()} -->
+                                                {{member.name}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="address">주소</label>
                                             <!-- <div id="address"></div> -->
                                             <div>
-                                                ${member.getAddr()}
+                                                {{member.addr}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="phone">전화번호</label>
                                             <!-- <div id="phone"></div> -->
                                             <div>
-                                                ${member.getPhone()}
+                                                {{member.phone}}
                                             </div>
                                         </div>
                                     </div>
@@ -94,7 +94,27 @@
 
 <script>
 export default {
-
+    name: 'MyPageVue',
+    data: function() {
+        return {
+            member: ''
+        }
+    },
+    created: function() {
+        this.getMember()
+    },
+    methods: {
+        getMember: function() {
+            this.$axios.get('http://localhost/admin/member/ssafy')
+                .then(response => {
+                    console.log(JSON.stringify(response))
+                    this.member = response.data})
+                .catch(error => {
+                    console.log(error)
+                })
+                
+        }
+    }
 }
 </script>
 
