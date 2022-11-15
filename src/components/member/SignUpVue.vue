@@ -16,23 +16,24 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="text-black" for="id">아이디</label> 
-                                        <input type="text" class="form-control" id="id" name="id">
+                                        <input v-model="id" type="text" class="form-control" id="id" name="id">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="pw">비밀번호</label> 
-                                        <input type="password" class="form-control" id="pw" name="pw">
+                                        <input v-model="pw" type="password" class="form-control" id="pw" name="pw">
+                                        <p>pw: {{ pw }}</p>
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="name">이름</label> 
-                                        <input type="text" class="form-control" id="name" name="name">
+                                        <input v-model="name" type="text" class="form-control" id="name" name="name">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="addr">주소</label> 
-                                        <input type="text" class="form-control" id="addr" name="addr">
+                                        <input v-model="addr" type="text" class="form-control" id="addr" name="addr">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="phone">전화번호</label> 
-                                        <input type="text" class="form-control" id="phone" name="phone">
+                                        <input v-model="phone" type="text" class="form-control" id="phone" name="phone">
                                     </div>
                                 </div>
                             </div>

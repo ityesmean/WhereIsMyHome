@@ -1,19 +1,21 @@
 <template>
   <div>
-    <AptCostVue></AptCostVue>
+    <apt-list></apt-list>
   </div>
 </template>
 
 <script>
-import AptCostVue from "@/components/apt/AptCostVue.vue"
+import AptList from "@/components/apt/AptList";
+
 export default {
   name: "AptCostView",
   components: {
-    AptCostVue
+    AptList
   }
 }
 </script>
 
+    AptList
 <style>
 
 </style>
