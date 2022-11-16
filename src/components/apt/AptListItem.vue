@@ -1,10 +1,12 @@
 <template>
   <tr>
-    <td>{{ apt.일련번호 }}</td>
-    <td>{{ apt.아파트 }}</td>
-    <td>{{ apt.법정동 }}</td>
-    <td>{{ apt.층 }}층</td>
-    <td>{{ apt.거래금액 }}만원</td>
+    <td>{{ apt.name }}</td>
+    <td>{{ apt.floor }}층</td>
+    <td>{{ apt.area }}</td>
+    <td>{{ apt.dong }}</td>
+    <td>{{ apt.dealAmount }}만원</td>
+    <td>{{ apt.year }}</td>
+    <td>{{ apt.month }}</td>
   </tr>
 </template>
 

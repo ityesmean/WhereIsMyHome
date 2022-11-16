@@ -15,35 +15,37 @@
                     <div class="row col-md-12 justify-content-center mb-2">
                         <div class="form-group col-md-2">
                             <select class="dropdown" id="sido" name="sido" @change="changeSido">
-                                <option value="">시도선택</option>
+                              <option value="">시도 선택</option>
+                              <option v-for="(info, index) in sido" :key="index" :value="info.dongCode">{{info.sidoName}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
                             <select class="dropdown" id="gugun" name="gugun" @change="changeGugun">
-                                <option value="">구군선택</option>
+                              <option value="">구군 선택</option>
+                              <option v-for="(info, index) in gugun" :key="index" :value="info.dongCode">{{info.gugunName}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <select class="dropdown" id="dong" name="dong">
-                                <option value="">동선택</option>
+                            <select class="dropdown" id="dong" name="dong" @change="changeDong">
+                              <option value="">동 선택</option>
+                              <option v-for="(info, index) in dong" :key="index" :value="info.dongCode">{{info.dongName}}</option>
                             </select>
                         </div>
 
                         <div class="form-group col-md-2">
-                            <button type="button" id="list-btn" class="btn btn-primary mb-4">
-                                조회</button>
+                            <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
+                              조회</button>
                         </div>
 
                         <div class="form-group col-md-2">
                             <button type="button" id="favorite-btn" class="btn btn-primary mb-4">
-                                관심지역 설정</button>
+                              관심지역 설정</button>
                         </div>
                     </div>
                 </form>
                 <div id="map" style="width: 1100px; height: 400px"></div>
-
                 <div style="width: 1100px; height: 400px; overflow: auto">
-                    <table class="table table-hover text-center" style="display: none">
+                    <table class="table table-hover text-center" v-show="apts">
                         <tr>
                             <th>아파트이름</th>
                             <th>층</th>
@@ -64,7 +66,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import AptListItem from "@/components/apt/AptListItem.vue"
 
 export default {
@@ -75,46 +77,68 @@ export default {
   data() {
     return {
       dongregcode: '',
-      apts: [],
+      sido: [],
+      gugun: [],
+      dong: [],
+      apts: null
     };
   },
   mounted() {
-    this.$axios.get('http://localhost/home/addrlist/sido/00000000')
-        // .then(response => console.log(response.data[0].dongCode))
-        // .then(console.log(data.dongCode.substr(0, 2)))
-        // .then(this.sendRequest("gugun", response.data.dongCode.substr(0, 2)))
+    this.sendRequest("sido", "00000000")
   },
   methods: {
-    // getSido: function() {
-    //   this.$axios.get('http://localhost/home/addrlist/00000000/sido')
-    //       .then(response => this.changeSido(response.da))
-    // },
-    changeSido() {
-      // 불러온 후, 시도 바뀌면 여기 수정 (구군 업데이트)
-      console.log()
+    changeSido(e) {
+      let cur = e.currentTarget.value;
+      console.log("시도 바뀜 " + cur);
+      this.initOption("gugun")
+      this.initOption("dong")
+      this.sendRequest("gugun", cur.substr(0,2));
     },
-    changeGugun() {
-      // 그 다음 구군 바뀌면 여기 수정 (시도 업데이트)
+    changeGugun(e) {
+      let cur = e.currentTarget.value;
+      console.log("구군 바뀜 " + cur)
+      this.initOption("dong")
+      this.sendRequest("dong", cur.substr(0, 5));
+    },
+    changeDong(e) {
+      let cur = e.currentTarget.value;
+      console.log("동 바뀜 " + cur);
+      this.dongregcode = cur;
     },
     sendRequest(selid, regcode) {
-      const url = "/home/addrlist/"+selid+"/"+regcode;
-      console.log(selid);
-      console.log(regcode)
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => this.addOption(selid, data));
+      const url = `http://localhost/home/addrlist/${selid}/${regcode}`;
+      this.$axios.get(url)
+        .then((response) => this.addOption(selid, response.data))
     },
     addOption(selid, data) {
-      console.log(selid);
-      console.log(data);
+      switch (selid) {
+        case "sido":
+          console.log(data)
+          this.sido = data;
+          break;
+        case "gugun":
+          this.gugun = data;
+          break;
+        case "dong":
+          this.dong = data;
+          break;
+      }
     },
-    
+    initOption(selid) {
+      switch (selid) {
+        case "gugun":
+          this.gugun = [];
+          break;
+        case "dong":
+          this.dong = [];
+          break;
+      }
+    },
     getAptList() {
-      // const serviceKey = "eE7PGNUbEMWVo1p6YJHhd%2BYFWOWanb055uXd5H9gCpAoYc6DUWTRfrSQeO6Gsi4%2FYLa7GYXlrVPXq549o88okg%3D%3D";
-      // const url = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}&pageNo=1&numOfRows=10&LAWD_CD=${this.lawdCd}&DEAL_YMD=${this.dealYmd}`;
+      console.log(this.dongregcode)
       const url = `http://localhost/home/aptlist/${this.dongregcode}`;
-      axios.get(url).then(response => (this.apts = response.data.response.body.items.item));
-      console.log(this.apts);
+      this.$axios.get(url)
+        .then(response => this.apts = response.data)
     }
   }
 
