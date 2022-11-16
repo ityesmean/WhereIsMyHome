@@ -37,6 +37,9 @@
 
 <script>
 export default {
+    mounted() {
+        console.log(this.$session.get('session'));
+    }
 
 }
 </script>

@@ -11,42 +11,34 @@
                     <div class="col-lg-5 bg-white p-5">
                         <form id="form-update" class="contact-form" data-aos="fade-up" data-aos-delay="200"
                             action="" method="post">
-                            <!-- <input type="hidden" name="action" value="updateform">
-                -->
-                            <!-- <input type="hidden" name="id" value="${member.getId() }"> -->
-                                <div class="row">
+                            <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label class="text-black" for="id">아이디</label>
-                                            <!-- <div id="id"></div> -->
                                             <div>
                                                 {{member.id}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="password">비밀번호</label>
-                                            <!-- <div id="password"></div> -->
                                             <div>
                                                 {{member.pw}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="name">이름</label>
-                                            <!-- <div id="name"></div> -->
                                             <div>
                                                 {{member.name}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="address">주소</label>
-                                            <!-- <div id="address"></div> -->
                                             <div>
                                                 {{member.addr}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="text-black" for="phone">전화번호</label>
-                                            <!-- <div id="phone"></div> -->
                                             <div>
                                                 {{member.phone}}
                                             </div>
@@ -56,8 +48,6 @@
 
                                 <div class="accordion" id="accordion_1">
                                     <div class="accordion-item">
-                                        <!-- <button type="button" class="btn btn-primary mb-4">수정</button> -->
-                                        <!-- <input type="submit" id="btn-update" class="btn btn-primary mb-4" value="수정"> -->
                                         <router-link to="/member/update">
                                             <button id="btn-update" class="btn btn-primary mb-4">
                                                 수정
@@ -66,8 +56,9 @@
 
                                         <!-- 탈퇴 버튼 -->
                                         <button id="btn-delete" @click="deleteMember" class="btn btn-primary mb-4" >
-                                    삭제</button>
-                                <!--data-toggle="collapse"
+                                            삭제
+                                        </button>
+                                        <!--data-toggle="collapse"
                                             data-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne" -->
 
@@ -115,7 +106,7 @@ export default {
     },
     methods: {
         getMember: function () {
-            this.$axios.get('http://localhost/admin/member/ssafy')
+            this.$axios.get(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
                     console.log(response)
                     this.member = response.data
@@ -128,13 +119,14 @@ export default {
 
         deleteMember: function (e) {
             e.preventDefault();
-            this.$axios.delete('http://localhost/admin/member/ssafy', {
-            })
+            this.$axios.delete(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
                     console.log(response)
+                    this.$session.destroy()
                     this.$router.push({
                         name: "index"
                     });
+                    location.reload()
                 })
                 .catch(error => {
                     console.log(error)

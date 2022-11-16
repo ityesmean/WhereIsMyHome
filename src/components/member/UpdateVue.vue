@@ -40,13 +40,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <router-link to="/member/mypage"> -->
                                 <button id="btn-update" @click="updateMember" class="btn btn-primary mb-4" >
                                     수정
                                 </button>
-                            <!-- </router-link> -->
-                            <button type="button" onclick="location.href = '${root }/member/list?id=${login.id }'"
-                                class="btn btn-primary mb-4">돌아가기</button>
+                            
+                            <router-link to="/member/mypage"> 
+                            <button type="button" class="btn btn-primary mb-4">돌아가기</button>
+                            </router-link>
                         </form>
                     </div> <!-- /.col-lg-7 -->
                 </div> <!-- /.row -->
@@ -70,7 +70,7 @@ export default {
     },
     methods: {
         getMember: function() {
-            this.$axios.get('http://localhost/admin/member/ssafy')
+            this.$axios.get(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
                     this.member = response.data
                     this.$refs.refId.value = this.member.id;
@@ -104,11 +104,6 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-
-            
-
-        
-                
         },
     
     }

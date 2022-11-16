@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- footer -->
+    <!-- footer -->
     <div class="site-footer">
         <div class="inner first">
         <div class="container">
@@ -17,9 +17,9 @@
                 <div class="widget">
                     <h3 class="heading">Pages</h3>
                     <ul class="links list-unstyled">
-                    <li><a href="/home/">아파트 실거래가 조회</a></li>
-                    <li><a href="../member/list?id=${login.id }">마이페이지</a></li>
-                    <li><a href="/member/passwordpage">비밀번호 찾기</a></li>
+                    <li><router-link to="/aptcost">아파트 실거래가 조회</router-link></li>
+                    <li><router-link to="/member/mypage">마이페이지</router-link></li>
+                    <li><router-link to="#">비밀번호 찾기</router-link></li>
                     <li><a href="#">내 관심정보</a></li>
                     </ul>
                 </div>

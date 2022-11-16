@@ -1,19 +1,8 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/aptcost">aptCost</router-link> |
-      <router-link to="/member/signup">signUp</router-link> |
-      <router-link to="/member/login">login</router-link> |
-      <router-link to="/member/mypage">myPage</router-link> |
-      <router-link to="/member/update">update</router-link> |
-      <router-link to="/member/password">password</router-link> |
-      <router-link to="/aptdetailform">aptDetailForm</router-link> -->
-    </nav>
     <header-vue></header-vue>
     <router-view></router-view>
     <footer-vue></footer-vue>
-    <router-view/>
   </div>
 </template>
 
@@ -45,21 +34,6 @@ export default {
 @import "assets/css/aos.css";
 @import "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css";
 @import "assets/css/style.css";
-
-
-/* @import "../assets/js/jquery-3.4.1.min.js";
-@import "../assets/js/popper.min.js";
-@import "../assets/js/bootstrap.min.js";
-@import "../assets/js/owl.carousel.min.js";
-@import "../assets/js/jquery.animateNumber.min.js";
-@import "../assets/js/jquery.waypoints.min.js";
-@import "../assets/js/jquery.fancybox.min.js";
-@import "../assets/js/aos.js";
-@import "../assets/js/jarallax.min.js";
-@import "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js";
-@import "../assets/js/custom.js"; */
-
-
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

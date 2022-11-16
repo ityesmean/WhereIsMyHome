@@ -11,7 +11,6 @@
                     <div class="col-lg-5 bg-white p-5">
                         <!-- <form @submit.prevent="submitForm" -->
                             <!-- class="contact-form" data-aos="fade-up" data-aos-delay="200"> -->
-                            <!-- <input type="hidden" name="action" value="insertmember"> -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -45,7 +44,7 @@
 
                             <div class="form-group">
                                 <p>
-                                    <small>이미 계정이 있으시다면, <router-link to="/login">로그인</router-link></small>
+                                    <small>이미 계정이 있으시다면, <router-link to="/member/login">로그인</router-link></small>
                                 </p>
                             </div>
                         <!-- </form> -->
