@@ -9,43 +9,46 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5 bg-white p-5">
-                        <form action="" method="post" id="form-join"
-                            class="contact-form" data-aos="fade-up" data-aos-delay="200">
+                        <!-- <form @submit.prevent="submitForm" -->
+                            <!-- class="contact-form" data-aos="fade-up" data-aos-delay="200"> -->
                             <!-- <input type="hidden" name="action" value="insertmember"> -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="text-black" for="id">아이디</label> 
-                                        <input v-model="id" type="text" class="form-control" id="id" name="id">
+                                        <input v-model="id" type="text" class="form-control" id="id">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="pw">비밀번호</label> 
-                                        <input v-model="pw" type="password" class="form-control" id="pw" name="pw">
-                                        <p>pw: {{ pw }}</p>
+                                        <input v-model="pw" type="password" class="form-control" id="pw" >
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="name">이름</label> 
-                                        <input v-model="name" type="text" class="form-control" id="name" name="name">
+                                        <input v-model="name" type="text" class="form-control" id="name" >
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="addr">주소</label> 
-                                        <input v-model="addr" type="text" class="form-control" id="addr" name="addr">
+                                        <input v-model="addr" type="text" class="form-control" id="addr" >
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="phone">전화번호</label> 
-                                        <input v-model="phone" type="text" class="form-control" id="phone" name="phone">
+                                        <input v-model="phone" type="text" class="form-control" id="phone">
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="button" id="btn-join" class="btn btn-primary mb-4" value="등록">
+                            <router-link to="/member/login">
+                                <button id="btn-join" @click="joinMember" class="btn btn-primary mb-4">
+                                    등록
+                                </button>
+                            </router-link>
 
                             <div class="form-group">
                                 <p>
                                     <small>이미 계정이 있으시다면, <router-link to="/login">로그인</router-link></small>
                                 </p>
                             </div>
-                        </form>
+                        <!-- </form> -->
                     </div>
                     <!-- /.col-lg-7 -->
                 </div>
@@ -59,32 +62,65 @@
 <script>
 export default {
     name: 'SignUpVue',
-    data: function() {
+    data: function () {
         return {
-            member: ''
-        }
+            id: null,
+            pw: null,
+            name: null,
+            addr: null,
+            phone: null,
+            errors: [],
+            errorshow: false
+        }   
     },
     created: function() {
         this.joinMember()
     },
     methods: {
-        joinMember: function() {
-            this.$axios.post('http://localhost/admin/member', {
-                id: this.id,
-                pw: this.pw,
-                name: this.name,
-                addr: this.addr,
-                phone: this.phone
-            })
-                .then(response => {
-                    console.log(response)
-                    this.$router.push({
-                        name: "member"
-                    });
+        
+        validationCheck() {
+            this.errors = [];
+            if (!this.id) {
+                this.error.push("아이디를 입력해주세요.");
+            }
+            if (!this.pw) {
+                this.error.push("비밀번호를 입력해주세요.");
+            }
+            if (!this.name) {
+                this.error.push("이름을 입력해주세요.");
+            }
+            if (!this.addr) {
+                this.error.push("주소를 입력해주세요.");
+            }
+            if (!this.phone) {
+                this.error.push("전화번호를 입력해주세요.");
+            }
+            
+        },
+        joinMember: function () {
+            this.validationCheck();
+
+            if (this.errors.length == 0) {
+                this.$axios.post('http://localhost/admin/member', {
+                    id: this.id,
+                    pw: this.pw,
+                    name: this.name,
+                    addr: this.addr,
+                    phone: this.phone
                 })
-                .catch(error => {
-                    console.log(error)
-                })
+                    .then(response => {
+                        console.log(response)
+                        this.$router.push({
+                            name: "login"
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+            }
+
+
                 
         }
     }
