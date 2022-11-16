@@ -43,22 +43,24 @@
                         </div>
                     </div>
                 </form>
-                <div id="map" style="width: 1100px; height: 400px"></div>
-                <div style="width: 1100px; height: 400px; overflow: auto">
-                    <table class="table table-hover text-center" v-show="apts">
-                        <tr>
-                            <th>아파트이름</th>
-                            <th>층</th>
-                            <th>면적</th>
-                            <th>법정동</th>
-                            <th>거래금액</th>
-                            <th>매매년도</th>
-                            <th>매매월</th>
-                        </tr>
-                        <tbody>
-                          <apt-list-item v-for="(apt, index) in apts" :key="index" :apt="apt"></apt-list-item>
-                        </tbody>
-                    </table>
+                <div>
+                  <div id="map" style="width: 1100px; height: 400px;"></div>
+                  <div v-show="apts" style="width: 1100px; height: 400px; overflow: auto">
+                      <table class="table table-hover text-center">
+                          <tr>
+                              <th>아파트이름</th>
+                              <th>층</th>
+                              <th>면적</th>
+                              <th>법정동</th>
+                              <th>거래금액</th>
+                              <th>매매년도</th>
+                              <th>매매월</th>
+                          </tr>
+                          <tbody>
+                            <apt-list-item v-for="(apt, index) in apts" :key="index" :apt="apt"/>
+                          </tbody>
+                      </table>
+                  </div>
                 </div>
             </div>
         </div>
@@ -76,6 +78,8 @@ export default {
   },
   data() {
     return {
+      map: null,
+      aptMap: null,
       dongregcode: '',
       sido: [],
       gugun: [],
@@ -85,8 +89,74 @@ export default {
   },
   mounted() {
     this.sendRequest("sido", "00000000")
+
+    if (window.kakao && window.kakao.maps) {
+      this.initMap();
+    } else {
+      const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=38e26e736d7ea2c5f9e89fa2b3a68b04&libraries=services";
+      document.head.appendChild(script);
+    }
   },
   methods: {
+    ///////// Map
+    initMap() {
+      const container = document.getElementById("map");
+      console.log(container)
+      const options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 7,
+      };
+
+      //지도 객체를 등록합니다.
+      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      this.map = new kakao.maps.Map(container, options);
+    },
+    makeMarker() {
+      this.initMap();
+      // var cnt = 0;
+      let coords;
+      let aptSet = new Set();
+      for (let apt of this.apts) {
+        // console.log(apt)
+        // console.log(apt.lat + ", " + apt.lng)
+        let ltlg = apt.lat + ", " + apt.lng;
+        if (aptSet.has(ltlg)) continue;
+        aptSet.add(ltlg)
+        let markerPosition  = new kakao.maps.LatLng(apt.lat, apt.lng); 
+        let marker = new kakao.maps.Marker({
+          map: this.map,
+          position: markerPosition
+        })
+        coords = new kakao.maps.LatLng(apt.lat, apt.lng);
+        marker.setMap(this.map)
+
+        let iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">' + apt.name + ': ' + apt.dealAmount + '만원' + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        iwPosition = new kakao.maps.LatLng(apt.lat, apt.lng); //인포윈도우 표시 위치입니다
+
+        // 인포윈도우를 생성합니다
+        let infowindow = new kakao.maps.InfoWindow({
+            position : iwPosition, 
+            content : iwContent 
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', () => this.makeOverListener(marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', () => this.makeOutListener(infowindow));
+      }
+
+      this.map.setCenter(coords);
+    },
+    makeOverListener(marker, infowindow) {
+      infowindow.open(this.map, marker)
+    },
+    makeOutListener(infowindow) {
+      infowindow.close();
+    },
+
+    ///////// apt
     changeSido(e) {
       let cur = e.currentTarget.value;
       console.log("시도 바뀜 " + cur);
@@ -139,7 +209,10 @@ export default {
       const url = `http://localhost/home/aptlist/${this.dongregcode}`;
       this.$axios.get(url)
         .then(response => this.apts = response.data)
-    }
+        // .then(() => console.log(this.apts))
+        .then(() => this.makeMarker())
+    },
+    
   }
 
   // created() {
