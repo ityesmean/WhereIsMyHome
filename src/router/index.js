@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import IndexView from '../views/IndexView.vue'
 import AptCostView from '../views/AptCostView.vue'
 import AppMember from '../views/AppMember.vue'
+import AppBoard from '../views/AppBoard.vue'
 import AptDetailFormView from '../views/AptDetailFormView.vue'
 
 Vue.use(VueRouter)
@@ -22,6 +23,38 @@ const routes = [
     path: '/aptdetailform',
     name: 'aptdetailform',
     component: AptDetailFormView
+  },
+  {
+    path: '/board',
+    name: 'board',
+    component: AppBoard,
+    children:[
+      {
+        path: "boardlist",
+        name: 'boardlist',
+        component: () => import("@/components/board/BoardList"),
+      },
+      {
+        path: "boardwrite",
+        name: 'boardwrite',
+        component: () => import("@/components/board/BoardWrite"),
+      },
+      {
+        path: "boardview/:articleno",
+        name: 'boardview',
+        component: () => import("@/components/board/BoardView"),
+      },
+      {
+        path: "boardmodify",
+        name: 'boardmodify',
+        component: () => import("@/components/board/BoardModify"),
+      },
+      {
+        path: "boarddelete",
+        name: 'boarddelete',
+        component: () => import("@/components/board/BoardDelete"),
+      },
+    ],
   },
   {
     path: "/member",
