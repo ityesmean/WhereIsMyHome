@@ -31,26 +31,23 @@
                               <option v-for="(info, index) in dong" :key="index" :value="info.dongCode">{{info.dongName}}</option>
                             </select>
                         </div>
-
-                        
+                        <div class="form-group col-md-2">
+                            <select class="dropdown" id="sort" name="sort" @change="changeSort">
+                              <!-- <option :value="sort">정렬</option> -->
+                              <option v-for="(type, index) in sorts" :key="index" :value="type">{{type}}</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="row col-md-12 justify-content-center mb-2">
-                      <label style="font-size: 20px; padding-right:10px">가성비
-                        <input type="radio" v-model="selected" id="pricePerArea" value="pricePerArea" style="zoom:1.3;"> 
-                      </label>
                       <label style="font-size: 20px; padding-right:10px">신축
-                        <input type="radio" v-model="selected" id="newConstruction" value="newConstruction" style="zoom:1.3;"> 
+                        <input type="checkbox" v-model="selected" id="newConstruction" value="newConstruction" style="zoom:1.3;"> 
                       </label>
                       <label style="font-size: 20px; padding-right:10px">1층 제외
-                        <input type="radio" v-model="selected" id="excludingFirst" value="excludingFirst" style="zoom:1.3;"> 
+                        <input type="checkbox" v-model="selected" id="excludingFirst" value="excludingFirst" style="zoom:1.3;"> 
                       </label>
                       <label style="font-size: 20px; padding-right:10px">현위치 주변
-                        <input type="radio" v-model="selected" id="curPos" value="curPost" style="zoom:1.3;"> 
+                        <input type="checkbox" v-model="selected" id="curPos" value="curPost" style="zoom:1.3;"> 
                       </label>
-                      <label style="font-size: 20px; padding-right:10px">거래 많은 순
-                        <input type="radio" v-model="selected" id="bestDeal" value="bestDeal" style="zoom:1.3;"> 
-                      </label>
-                      
                       <div class="form-group col-md-2" style="align:center;">
                           <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
                             조회
@@ -110,7 +107,10 @@ export default {
       gugun: [],
       dong: [],
       apts: null,
-      selected: "newConstruction",
+      sorts: ["newest", "lowest", "best"],
+      // [["newest", "최신 거래 순"], ["lowest", "가격 낮은 순"], ["best", "거래 많은 순"]],
+      selected: ["default"],
+      sort: 'newest'
     };
   },
   mounted() {
@@ -224,20 +224,28 @@ export default {
       switch (selid) {
         case "gugun":
           this.gugun = [];
+          this.sort = 'newest';
           break;
         case "dong":
           this.dong = [];
+          this.sort = 'newest';
           break;
       }
     },
+    changeSort(e) {
+      let cur = e.currentTarget.value;
+      console.log("sort 바뀜 " + cur);
+      this.sort = cur;
+    },
     getAptList() {
       console.log(this.dongregcode)
-      const url = `http://localhost/home/aptlist/${this.dongregcode}/${this.selected}`;
+      const url = `http://localhost/home/aptlist/${this.dongregcode}/${this.selected}/${this.sort}`;
       this.$axios.get(url)
         .then(response => this.apts = response.data)
-        // .then(() => console.log(this.apts))
         .then(() => this.makeMarker())
-        // .then(console.log(this.selected))
+        .then(console.log("selected: " + this.selected))
+        .then(console.log("sort: " + this.sort))
+        .then(console.log("apts: " + this.apts))
     },
     
   }
