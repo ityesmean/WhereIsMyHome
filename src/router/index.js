@@ -28,7 +28,17 @@ const routes = [
     path: '/board',
     name: 'board',
     component: AppBoard,
-    children:[
+    children: [
+      {
+        path: "boardnotice",
+        name: 'boardnotice',
+        component: () => import("@/components/board/BoardNotice"),
+      },
+      {
+        path: "noticewrite",
+        name: 'noticewrite',
+        component: () => import("@/components/board/NoticeWrite"),
+      },
       {
         path: "boardlist",
         name: 'boardlist',

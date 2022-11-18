@@ -24,11 +24,12 @@
                 <template v-if="sessionData == null">
                   <ul class="js-clone-nav d-none d-lg-inline-block text-left float-right site-menu">
                       <li><router-link to="/member/signup">Sign up</router-link></li> 
-                      <li class="cta-button active"> <router-link to="/member/login">Login</router-link></li>      
+                      <li class="cta-button active"><router-link to="/member/login">Login</router-link></li>      
                   </ul>
                 </template> 
                 <template v-else>
                   <ul class="js-clone-nav d-none d-lg-inline-block text-left float-right site-menu">
+                    <li><router-link to="/board/boardnotice">Notice</router-link></li> 
                     <li><router-link to="/member/mypage">My Page</router-link></li> 
                     <li><router-link to="/board/boardlist">Board</router-link></li> 
                     <li class="cta-button active"><button class="btn btn-primary mb-4" @click="logout">logout</button></li>  
