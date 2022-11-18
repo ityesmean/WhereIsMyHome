@@ -10,7 +10,7 @@
                         </p>
                     </div>
                 </div>
-                <form action="addr.do" method="get" id="rform">
+                <form id="rform">
                     <input type="hidden" name="action" value="insertfavorite">
                     <div class="row col-md-12 justify-content-center mb-2">
                         <div class="form-group col-md-2">
@@ -32,14 +32,39 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-md-2">
-                            <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
-                              조회</button>
-                        </div>
+                        
+                    </div>
+                    <div class="row col-md-12 justify-content-center mb-2">
+                      <label style="font-size: 20px; padding-right:10px">가성비
+                        <input type="radio" v-model="selected" id="pricePerArea" value="pricePerArea" style="zoom:1.3;"> 
+                      </label>
+                      <label style="font-size: 20px; padding-right:10px">신축
+                        <input type="radio" v-model="selected" id="newConstruction" value="newConstruction" style="zoom:1.3;"> 
+                      </label>
+                      <label style="font-size: 20px; padding-right:10px">1층 제외
+                        <input type="radio" v-model="selected" id="excludingFirst" value="excludingFirst" style="zoom:1.3;"> 
+                      </label>
+                      <label style="font-size: 20px; padding-right:10px">현위치 주변
+                        <input type="radio" v-model="selected" id="curPos" value="curPost" style="zoom:1.3;"> 
+                      </label>
+                      <label style="font-size: 20px; padding-right:10px">거래 많은 순
+                        <input type="radio" v-model="selected" id="bestDeal" value="bestDeal" style="zoom:1.3;"> 
+                      </label>
+                      
+                      <div class="form-group col-md-2" style="align:center;">
+                          <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
+                            조회
+                          </button>
+                      </div>
 
                         <div class="form-group col-md-2">
                             <button type="button" id="favorite-btn" class="btn btn-primary mb-4">
-                              관심지역 설정</button>
+                              관심</button>
+                        </div>
+
+                        <div id="detail" style="display:none">
+                          
+                          짜잔
                         </div>
                     </div>
                 </form>
@@ -84,7 +109,8 @@ export default {
       sido: [],
       gugun: [],
       dong: [],
-      apts: null
+      apts: null,
+      selected: "newConstruction",
     };
   },
   mounted() {
@@ -108,7 +134,7 @@ export default {
       console.log(container)
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 7,
+        level: 5,
       };
 
       //지도 객체를 등록합니다.
@@ -206,11 +232,12 @@ export default {
     },
     getAptList() {
       console.log(this.dongregcode)
-      const url = `http://localhost/home/aptlist/${this.dongregcode}`;
+      const url = `http://localhost/home/aptlist/${this.dongregcode}/${this.selected}`;
       this.$axios.get(url)
         .then(response => this.apts = response.data)
         // .then(() => console.log(this.apts))
         .then(() => this.makeMarker())
+        // .then(console.log(this.selected))
     },
     
   }
