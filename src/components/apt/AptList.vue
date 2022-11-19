@@ -33,7 +33,6 @@
                         </div>
                         <div class="form-group col-md-2">
                             <select class="dropdown" id="sort" name="sort" @change="changeSort">
-                              <!-- <option :value="sort">정렬</option> -->
                               <option v-for="(info, index) in sorts" :key="index" :value="info.type">{{info.name}}</option>
                             </select>
                         </div>
@@ -61,8 +60,12 @@
                     </div>
                 </form>
                 <div>
-                  <div id="failed" style="display: none; text-align : center;" v-show="!apts">검색결과가 없습니다.</div>
+                  <div id="failed" style="display: none; text-align : center;" v-show="!apts">
+                    <div v-show="first">검색해 주세요!</div>
+                    <div v-show="!first">검색결과가 없습니다.</div>
+                  </div>
                   <div id="map" style="width: 1100px; height: 400px;" v-show="apts"></div>
+                  <!-- <div id="map" style="width: 1100px; height: 400px;"></div> -->
                   <div v-show="apts" style="width: 1100px; height: 400px; overflow: auto">
                       <table class="table table-hover text-center">
                           <tr>
@@ -103,6 +106,7 @@ export default {
       gugun: [],
       dong: [],
       apts: null,
+      first: true,
       sorts: [
         {
           type: "newset",
@@ -123,6 +127,7 @@ export default {
   },
   mounted() {
     this.sendRequest("sido", "00000000")
+    this.first = true
 
     if (window.kakao && window.kakao.maps) {
       this.initMap();
@@ -139,7 +144,7 @@ export default {
     ///////// Map
     initMap() {
       const container = document.getElementById("map");
-      console.log(container)
+      // console.log(container)
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 5,
@@ -148,6 +153,40 @@ export default {
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
+
+
+      //지도 객체를 등록합니다.
+      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      // this.map = new kakao.maps.Map(container, options);
+
+      // var map = new kakao.maps.Map(container, options);
+
+      // if (navigator.geolocation) {
+      //   // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      //   navigator.geolocation.getCurrentPosition(function(position) {
+            
+      //       var lat = position.coords.latitude, // 위도
+      //           lon = position.coords.longitude; // 경도
+            
+      //       console.log(lat, lon);
+            
+      //       var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+      //           // message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+      //       map.setCenter(locPosition);     
+      //       // 마커와 인포윈도우를 표시합니다
+      //       // this.displayMarker(locPosition, message);
+                
+      //     });
+      // } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+          // var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+              // message = 'geolocation을 사용할수 없어요..'
+              // map.setCenter(locPosition);     
+              // console.log(message)
+          // this.displayMarker(locPosition, message);
+      // }
+
+      // this.map = map;
+      
     },
     makeMarker() {
       this.initMap();
@@ -264,8 +303,9 @@ export default {
         this.$axios.get(url)
           .then(response => this.apts = response.data)
           .then(() => this.makeMarker())
-          .then(console.log("selected: " + this.selected))
-          .then(console.log("sort: " + this.sort))
+          .then(this.first = false)
+          // .then(console.log("selected: " + this.selected))
+          // .then(console.log("sort: " + this.sort))
           // .then(() => {
           //   failed.style.display = '';
           //   container.style.display = '';
@@ -277,6 +317,9 @@ export default {
       // }
       // failed.style.display = '';
     },
+    // TODO 현위치로 집주변 구하기
+    // 좌표로 현위치 구하기 -> https://apis.map.kakao.com/web/sample/coord2addr/
+    // 지도 예쁘게 개선 -> https://apis.map.kakao.com/web/sample/keywordList/
     
   }
 
