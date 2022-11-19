@@ -54,19 +54,15 @@
                           </button>
                       </div>
 
-                        <div class="form-group col-md-2">
+                        <!-- <div class="form-group col-md-2">
                             <button type="button" id="favorite-btn" class="btn btn-primary mb-4">
                               관심</button>
-                        </div>
-
-                        <div id="detail" style="display:none">
-                          
-                          짜잔
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 <div>
-                  <div id="map" style="width: 1100px; height: 400px;"></div>
+                  <div id="failed" style="display: none; text-align : center;" v-show="!apts">검색결과가 없습니다.</div>
+                  <div id="map" style="width: 1100px; height: 400px;" v-show="apts"></div>
                   <div v-show="apts" style="width: 1100px; height: 400px; overflow: auto">
                       <table class="table table-hover text-center">
                           <tr>
@@ -121,12 +117,6 @@ export default {
           name: "거래 많은 순"
         },
       ],
-
-      // "newest" : "최신 거래 순",
-        // "lowest" : "가격 낮은 순",
-        // "best" : "거래 많은 순"
-      // ["newest", "lowest", "best"],
-      // [["newest", "최신 거래 순"], ["lowest", "가격 낮은 순"], ["best", "거래 많은 순"]],
       selected: ["default"],
       sort: 'newest'
     };
@@ -170,10 +160,20 @@ export default {
         let ltlg = apt.lat + ", " + apt.lng;
         if (aptSet.has(ltlg)) continue;
         aptSet.add(ltlg)
-        let markerPosition  = new kakao.maps.LatLng(apt.lat, apt.lng); 
+
+        // marker
+        var imgSrc = 'https://cdn-icons-png.flaticon.com/512/742/742473.png?w=826&t=st=1668827326~exp=1668827926~hmac=8f3a34fc924dcd5850cdf7a93c2092161c5ad35bbebbfa1fcfd7fde0ff252388',
+        imgSize = new kakao.maps.Size(50, 60),
+        imgOption = {offset: new kakao.maps.Point(25, 35)};
+
+        var markerImg = new kakao.maps.MarkerImage(imgSrc, imgSize, imgOption),
+        markerPosition = new kakao.maps.LatLng(apt.lat, apt.lng); // 마커가 표시될 위치입니다
+
+        // let markerPosition  = new kakao.maps.LatLng(apt.lat, apt.lng); 
         let marker = new kakao.maps.Marker({
           map: this.map,
-          position: markerPosition
+          position: markerPosition,
+          image: markerImg
         })
         coords = new kakao.maps.LatLng(apt.lat, apt.lng);
         marker.setMap(this.map)
@@ -258,12 +258,24 @@ export default {
     getAptList() {
       console.log(this.dongregcode)
       const url = `http://localhost/home/aptlist/${this.dongregcode}/${this.selected}/${this.sort}`;
-      this.$axios.get(url)
-        .then(response => this.apts = response.data)
-        .then(() => this.makeMarker())
-        .then(console.log("selected: " + this.selected))
-        .then(console.log("sort: " + this.sort))
-        // .then(console.log("apts: " + this.apts))
+      // const failed = document.getElementById("failed");
+      // const container = document.getElementById("map");
+      // try {
+        this.$axios.get(url)
+          .then(response => this.apts = response.data)
+          .then(() => this.makeMarker())
+          .then(console.log("selected: " + this.selected))
+          .then(console.log("sort: " + this.sort))
+          // .then(() => {
+          //   failed.style.display = '';
+          //   container.style.display = '';
+          // })
+          // .then(console.log("apts: " + this.apts))
+      // } catch {
+      //   container.style.display = 'none';
+      //   failed.style.display = '';
+      // }
+      // failed.style.display = '';
     },
     
   }
