@@ -34,7 +34,7 @@
                         <div class="form-group col-md-2">
                             <select class="dropdown" id="sort" name="sort" @change="changeSort">
                               <!-- <option :value="sort">정렬</option> -->
-                              <option v-for="(type, index) in sorts" :key="index" :value="type">{{type}}</option>
+                              <option v-for="(info, index) in sorts" :key="index" :value="info.type">{{info.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -107,7 +107,25 @@ export default {
       gugun: [],
       dong: [],
       apts: null,
-      sorts: ["newest", "lowest", "best"],
+      sorts: [
+        {
+          type: "newset",
+          name: "최신 거래 순"
+        }, 
+        {
+          type: "lowest",
+          name: "가격 낮은 순"
+        },
+        {
+          type: "best",
+          name: "거래 많은 순"
+        },
+      ],
+
+      // "newest" : "최신 거래 순",
+        // "lowest" : "가격 낮은 순",
+        // "best" : "거래 많은 순"
+      // ["newest", "lowest", "best"],
       // [["newest", "최신 거래 순"], ["lowest", "가격 낮은 순"], ["best", "거래 많은 순"]],
       selected: ["default"],
       sort: 'newest'
@@ -245,7 +263,7 @@ export default {
         .then(() => this.makeMarker())
         .then(console.log("selected: " + this.selected))
         .then(console.log("sort: " + this.sort))
-        .then(console.log("apts: " + this.apts))
+        // .then(console.log("apts: " + this.apts))
     },
     
   }
