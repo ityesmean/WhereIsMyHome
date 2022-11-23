@@ -14,15 +14,15 @@
                             <input type="hidden" name="action" value="login">
                             <div class="form-group">
                                 <label class="text-black" for="id">아이디</label> <input type="text" class="form-control"
-                                    id="id" v-model="id">
+                                    id="id" v-model="id" ref="id">
                             </div>
 
                             <div class="form-group">
                                 <label class="text-black" for="pw">비밀번호</label> <input type="password"
-                                    class="form-control" id="pw" v-model="pw">
+                                    class="form-control" id="pw" v-model="pw" ref="pw">
                             </div>
 
-                            <button id="btn-login" @click="loginMember" class="btn btn-primary mb-4">
+                            <button id="btn-login" @click="validationCheck" class="btn btn-primary mb-4">
                                 로그인
                             </button>
 
@@ -35,11 +35,8 @@
                             </div>
                         </form>
                     </div>
-                    <!-- /.col-lg-7 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
     </div>
 </template>
@@ -53,25 +50,45 @@ export default {
             pw: null
         }
     },
-    created: function () {
-    },
+
     methods: {
+        // 등록을 눌렀을 때 빈칸이면 alert창 후 입력 안 한 곳으로 focus
+        validationCheck() {
+            let err = true;
+            let msg = "";
+            err && !this.id && ((msg = "아이디를 입력해주세요"), (err = false), this.$refs.id.focus());
+            err && !this.pw && ((msg = "패스워드를 입력해주세요"), (err = false), this.$refs.pw.focus());
+            
+            if (!err) alert(msg);
+            else this.loginMember();    
+        },
+
         loginMember: function () {
             let info = {
                 'id': this.id,
+                'pw': this.pw
             }
-
-            this.$session.set('session', info)
+            console.log(info);
 
             this.$axios.get(`http://localhost/admin/member?id=${this.id}&pw=${this.pw}`)
-                .then(response => {
-                    console.log(response)
-                    this.$router.push({
-                        name: "index"
-                    });
-                    location.reload()
+                .then((response) => {
+                // status가 200이면 로그인이 가능함
+                    if (response.status === 200) {
+                        this.$session.set('session', info)
+                        alert("로그인 성공")
+                        this.$router.push({
+                            name: "index"
+                        });
+                        location.reload()
+                    }
+                    // status가 204면 로그인 실패
+                    else if (response.status === 204) {
+                        alert("로그인에 실패하셨습니다.")
+                    }
                 })
                 .catch(error => {
+                    // 이미 존재하는 id라면 실패 문구
+                    alert("로그인에 실패하셨습니다.")
                     console.log(error)
                 })
         }

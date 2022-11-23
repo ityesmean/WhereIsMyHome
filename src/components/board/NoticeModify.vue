@@ -27,11 +27,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.col-lg-7 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
     </div>
 </template>

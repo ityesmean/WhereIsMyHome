@@ -1,3 +1,4 @@
+<!-- 게시글 -->
 <template>
     <tr>
         <td>{{ article.articleno }}</td>

@@ -28,11 +28,8 @@
                         <button @click="checkValue" class="btn btn-primary mb-4">등록</button>
                         <button @click="moveList" class="btn btn-primary mb-4">목록</button>
                     </div>
-                    <!-- /.col-lg-7 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
     </div>
 </template>

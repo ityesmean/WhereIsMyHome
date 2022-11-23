@@ -20,13 +20,14 @@
                                     <h3><a href="#"><span></span></a></h3>
                                 </div>
                                 <div class="more">
-                                    <router-link to="/aptcost">
+                                    <a style="cursor:pointer" @click="validationCheck">
                                         <span class="icon-keyboard_backspace"></span>
-                                    </router-link>
+
+                                    </a>                                   
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- /.property-entry -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,6 +39,18 @@
 export default {
     mounted() {
         console.log(this.$session.get('session'));
+    },
+
+    methods: {
+        validationCheck() {
+            if (this.$session.get('session') == null) {
+                alert("로그인 후 이용해주세요.")
+            } else {
+                this.$router.push({
+                    name: "aptcost"
+                });
+            }
+        },
     }
 
 }

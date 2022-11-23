@@ -17,16 +17,27 @@
                             <div class="widget">
                                 <h3 class="heading">Pages</h3>
                                 <ul class="links list-unstyled">
-                                    <li>
-                                        <router-link to="/aptcost">아파트 실거래가 조회</router-link>
+                                    <li v-if="this.$session.get('session') != null">
+                                        <router-link to="/board/boardlist">동네 생활</router-link>
                                     </li>
-                                    <li>
+                                    <li v-if="this.$session.get('session') != null">
+                                        <router-link to="/board/boardnotice">알짜 정보</router-link>
+                                    </li>
+                                    <li v-if="this.$session.get('session') != null">
                                         <router-link to="/member/mypage">마이페이지</router-link>
                                     </li>
-                                    <li>
-                                        <router-link to="#">비밀번호 찾기</router-link>
+                                    <li v-if="this.$session.get('session') != null">
+                                        <router-link to="/aptcost">아파트 실거래가 조회</router-link>
                                     </li>
-                                    <li><a href="#">내 관심정보</a></li>
+                                    <li v-if="this.$session.get('session') == null">
+                                        <router-link to="/member/login">로그인</router-link>
+                                    </li>
+                                    <li v-if="this.$session.get('session') == null">
+                                        <router-link to="/member/signup">회원가입</router-link>
+                                    </li>
+                                    <li v-if="this.$session.get('session') == null">
+                                        <router-link to="/member/password">비밀번호 찾기</router-link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

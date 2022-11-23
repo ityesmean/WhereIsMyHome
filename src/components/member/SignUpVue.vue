@@ -13,32 +13,30 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="text-black" for="id">아이디</label>
-                                    <input v-model="id" type="text" class="form-control" id="id">
+                                    <input v-model="id" type="text" class="form-control" id="id" ref="id">
                                 </div>
                                 <div class="form-group">
                                     <label class="text-black" for="pw">비밀번호</label>
-                                    <input v-model="pw" type="password" class="form-control" id="pw">
+                                    <input v-model="pw" type="password" class="form-control" id="pw" ref="pw">
                                 </div>
                                 <div class="form-group">
                                     <label class="text-black" for="name">이름</label>
-                                    <input v-model="name" type="text" class="form-control" id="name">
+                                    <input v-model="name" type="text" class="form-control" id="name" ref="name">
                                 </div>
                                 <div class="form-group">
                                     <label class="text-black" for="addr">주소</label>
-                                    <input v-model="addr" type="text" class="form-control" id="addr">
+                                    <input v-model="addr" type="text" class="form-control" id="addr" ref="addr">
                                 </div>
                                 <div class="form-group">
                                     <label class="text-black" for="phone">전화번호</label>
-                                    <input v-model="phone" type="text" class="form-control" id="phone">
+                                    <input v-model="phone" type="text" class="form-control" id="phone" ref="phone">
                                 </div>
                             </div>
                         </div>
 
-                        <router-link to="/member/login">
-                            <button id="btn-join" @click="joinMember" class="btn btn-primary mb-4">
-                                등록
-                            </button>
-                        </router-link>
+                        <button id="btn-join" @click="validationCheck" class="btn btn-primary mb-4">
+                            등록
+                        </button>
 
                         <div class="form-group">
                             <p>
@@ -46,11 +44,8 @@
                             </p>
                         </div>
                     </div>
-                    <!-- /.col-lg-7 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
     </div>
 </template>
@@ -65,59 +60,44 @@ export default {
             name: null,
             addr: null,
             phone: null,
-            errors: [],
-            errorshow: false
         }
     },
-    created: function () {
-        this.joinMember()
-    },
     methods: {
-
+        // 등록을 눌렀을 때 빈칸이면 alert창 후 입력 안 한 곳으로 focus
         validationCheck() {
-            this.errors = [];
-            if (!this.id) {
-                this.error.push("아이디를 입력해주세요.");
-            }
-            if (!this.pw) {
-                this.error.push("비밀번호를 입력해주세요.");
-            }
-            if (!this.name) {
-                this.error.push("이름을 입력해주세요.");
-            }
-            if (!this.addr) {
-                this.error.push("주소를 입력해주세요.");
-            }
-            if (!this.phone) {
-                this.error.push("전화번호를 입력해주세요.");
-            }
+            let err = true;
+            let msg = "";
+            err && !this.id && ((msg = "아이디를 입력해주세요"), (err = false), this.$refs.id.focus());
+            err && !this.pw && ((msg = "패스워드를 입력해주세요"), (err = false), this.$refs.pw.focus());
+            err && !this.name && ((msg = "패스워드를 입력해주세요"), (err = false), this.$refs.name.focus());
+            err && !this.addr && ((msg = "패스워드를 입력해주세요"), (err = false), this.$refs.addr.focus());
+            err && !this.phone && ((msg = "패스워드를 입력해주세요"), (err = false), this.$refs.phone.focus());
+
+            if (!err) alert(msg);
+            // 이상 없으면 회원가입 진행
+            else this.joinMember();
 
         },
         joinMember: function () {
-            this.validationCheck();
-
-            if (this.errors.length == 0) {
-                this.$axios.post('http://localhost/admin/member', {
-                    id: this.id,
-                    pw: this.pw,
-                    name: this.name,
-                    addr: this.addr,
-                    phone: this.phone
+            // 입력한 회원정보를 보냅니다.
+            this.$axios.post('http://localhost/admin/member', {
+                id: this.id,
+                pw: this.pw,
+                name: this.name,
+                addr: this.addr,
+                phone: this.phone
+            })
+                .then(response => {
+                    console.log(response)
+                    alert("회원 등록이 완료되었습니다.")
+                    this.$router.push({
+                        path: "login"
+                    });
                 })
-                    .then(response => {
-                        console.log(response)
-                        this.$router.push({
-                            name: "login"
-                        });
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-
-            }
-
-
-
+                .catch(error => {
+                    alert("이미 등록된 아이디입니다.")
+                    console.log(error)
+                })
         }
     }
 }

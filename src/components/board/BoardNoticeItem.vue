@@ -1,3 +1,4 @@
+<!-- 알짜 정보 게시글 -->
 <template>
     <div class="col-lg-6 mb-4 mb-lg-0">
         <router-link :to="`/board/noticeview/${article.articleno}`" class="feature-v2 d-flex">
@@ -9,9 +10,8 @@
                 <p>{{ article.content }}</p>
             </div>
         </router-link>
-        <!-- </a>  -->
         <br>
-    </div> <!-- /.col-lg-6 -->
+    </div>
 </template>
 
 <script>

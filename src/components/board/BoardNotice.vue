@@ -10,6 +10,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- admin 계정이어야만 글작성 버튼이 보이게 처리 -->
                 <div v-if="admin == true">
                     <div style="text-align: center">
                         <button @click="moveWrite" class="btn btn-primary mb-4">글작성</button>
@@ -19,11 +20,10 @@
             <div class="untree_co-section">
                 <div class="container">
                     <div class="row gutter-v3">
-                        <!-- for문 -->
-                        <board-notice-item v-for="article in articles" :key="article.articleno" :article="article">
-                        </board-notice-item>
-                    </div> <!-- /.row -->
-                </div> <!-- /.container -->
+                        <!-- for문, 알짜정보 게시글을 불러옵니다. -->
+                        <board-notice-item v-for="article in articles" :key="article.articleno" :article="article"></board-notice-item>
+                    </div> 
+                </div> 
             </div>
         </div>
     </div>
@@ -44,9 +44,11 @@ export default {
     },
     created() {
         console.log(this.$session.get('session'))
+        // id가 admin이 아니면 admin 변수를 false 처리
         if (this.$session.get('session').id != `admin`) {
             this.admin = false;
         }
+        // 알짜정보 게시판 정보를 불러옵니다.
         this.$axios.get(`http://localhost/board/notice`).then(({ data }) => (this.articles = data));
     },
     methods: {

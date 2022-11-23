@@ -106,6 +106,11 @@ const routes = [
         name: 'update',
         component: () => import("@/components/member/UpdateVue"),
       },
+      {
+        path: "password",
+        name: 'password',
+        component: () => import("@/components/member/PasswordVue"),
+      },
     ],
   },
 ]

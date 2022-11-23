@@ -26,14 +26,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- </form> -->
                     </div>
-                    <!-- /.col-lg-7 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
     </div>
 </template>
@@ -46,6 +41,7 @@ export default {
             article: Object,
         };
     },
+    // 게시글 세부 정보를 불러옵니다.
     created() {
         this.$axios.get(`http://localhost/board/${this.$route.params.articleno}`).then(({ data }) => {
             this.article = data;
@@ -78,7 +74,6 @@ export default {
             else this.modifyArticle();
         },
         modifyArticle() {
-            // 비동기
             // TODO : 글번호에 해당하는 글정보 수정.
             this.$axios.put("http://localhost/board", this.article).then(({ data }) => {
                 let msg = "수정 처리 중 문제가 발생하였습니다.";

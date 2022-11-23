@@ -7,6 +7,7 @@
 <script>
 export default {
     name: "BoardDelete",
+    // 삭제 후 게시판 목록 이동
     created() {
         this.$axios.delete(`http://localhost/board/${this.$route.params.articleno}`).then(({ data }) => {
             let msg = "삭제 처리 중 문제 발생";

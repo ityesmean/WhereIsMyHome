@@ -43,9 +43,9 @@
                                 <button type="button" class="btn btn-primary mb-4">돌아가기</button>
                             </router-link>
                         </form>
-                    </div> <!-- /.col-lg-7 -->
-                </div> <!-- /.row -->
-            </div> <!-- /.container -->
+                    </div>
+                </div> 
+            </div> 
         </div>
     </div>
 </template>
@@ -64,6 +64,7 @@ export default {
         this.getMember()
     },
     methods: {
+        // 로그인 한 id의 수정 전 회원정보를 가져옵니다.
         getMember: function () {
             this.$axios.get(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
@@ -82,6 +83,7 @@ export default {
 
         updateMember: function (e) {
             e.preventDefault();
+            // 수정한 회원정보를 보냅니다.
             this.$axios.put('http://localhost/admin/member', {
                 id: this.$refs.refId.value,
                 pw: this.$refs.refPw.value,

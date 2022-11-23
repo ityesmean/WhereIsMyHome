@@ -56,15 +56,15 @@
 
                                     <!-- 탈퇴 버튼 -->
                                     <button id="btn-delete" @click="deleteMember" class="btn btn-primary mb-4">
-                                        삭제
+                                        탈퇴
                                     </button>
                                 </div>
                             </div>
                         </form>
-                    </div> <!-- /.col-lg-7 -->
-                </div> <!-- /.row -->
-            </div> <!-- /.container -->
-        </div> <!-- /.untree_co-section bg-light -->
+                    </div> 
+                </div>
+            </div> 
+        </div> 
 
     </div>
 </template>
@@ -81,6 +81,7 @@ export default {
         this.getMember()
     },
     methods: {
+        // 로그인한 id의 정보를 불러옵니다.
         getMember: function () {
             this.$axios.get(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
@@ -92,13 +93,14 @@ export default {
                 })
 
         },
-
+        // deleteMember를 호출하면 id 삭제 후 session을 지웁니다.
         deleteMember: function (e) {
             e.preventDefault();
             this.$axios.delete(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
                     console.log(response)
                     this.$session.destroy()
+                    alert("탈퇴 되었습니다.")
                     this.$router.push({
                         name: "index"
                     });

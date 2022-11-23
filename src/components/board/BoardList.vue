@@ -31,9 +31,9 @@
                                 <th>작성일</th>
                             </tr>
                         </thead>
+                        <!-- 게시판 글 불러옵니다. -->
                         <tbody>
-                            <board-list-item v-for="article in articles" :key="article.articleno" :article="article">
-                            </board-list-item>
+                            <board-list-item v-for="article in articles" :key="article.articleno" :article="article"></board-list-item>
                         </tbody>
                     </table>
                 </div>
@@ -56,9 +56,11 @@ export default {
             articles: [],
         };
     },
+    // 게시글 data를 불러옵니다.
     created() {
         this.$axios.get(`http://localhost/board`).then(({ data }) => (this.articles = data));
     },
+    // 글 작성 버튼을 누르면 boardWrite로 이동
     methods: {
         moveWrite() {
             this.$router.push({ name: "boardwrite" });
