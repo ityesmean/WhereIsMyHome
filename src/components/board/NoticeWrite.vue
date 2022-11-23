@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-lg-5 bg-white p-5">
+                    <div class="col-lg-5 bg-white p-5" style="border-radius: 30px;">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">

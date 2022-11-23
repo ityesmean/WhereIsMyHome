@@ -12,7 +12,7 @@
                 <div class="item">
                     <div class="property-entry">
 
-                        <div class="property-specs">
+                        <div class="property-specs" style="border-radius: 30px;">
                             <strong class="price"><span class="icon-wrap flaticon-house-size"></span> 아파트 실거래가</strong>
                             <div class="location d-flex justify-content-between align-items-center">
                                 <div>

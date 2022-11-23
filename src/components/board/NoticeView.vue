@@ -19,7 +19,7 @@
                                         <h3><strong>{{ article.subject }}</strong></h3>
                                     </div>
                                 </div>
-                                <div class="form-control text-left" style="height:200px">
+                                <div class="form-control text-left" style="height:200px; border-radius: 30px;">
                                     <div>
                                         <h6>{{ article.content }}</h6>
                                     </div>

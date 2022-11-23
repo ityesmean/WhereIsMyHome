@@ -1,7 +1,7 @@
-<!-- 알짜 정보 게시글 -->
+<!-- 알짜 정보 게시판 -->
 <template>
     <div class="col-lg-6 mb-4 mb-lg-0">
-        <router-link :to="`/board/noticeview/${article.articleno}`" class="feature-v2 d-flex">
+        <router-link :to="`/board/noticeview/${article.articleno}`" class="feature-v2 d-flex" style="border-radius: 30px;">
             <div class="icon-wrap">
                 <span class="icon-chat_bubble_outline"></span>
             </div>
