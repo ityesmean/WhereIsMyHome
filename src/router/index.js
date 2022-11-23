@@ -50,9 +50,19 @@ const routes = [
         component: () => import("@/components/board/BoardWrite"),
       },
       {
+        path: "noticeview/:articleno",
+        name: 'noticeview',
+        component: () => import("@/components/board/NoticeView"),
+      },
+      {
         path: "boardview/:articleno",
         name: 'boardview',
         component: () => import("@/components/board/BoardView"),
+      },
+      {
+        path: "noticemodify",
+        name: 'noticemodify',
+        component: () => import("@/components/board/NoticeModify"),
       },
       {
         path: "boardmodify",
@@ -63,6 +73,11 @@ const routes = [
         path: "boarddelete",
         name: 'boarddelete',
         component: () => import("@/components/board/BoardDelete"),
+      },
+      {
+        path: "noticedelete",
+        name: 'noticedelete',
+        component: () => import("@/components/board/NoticeDelete"),
       },
     ],
   },
@@ -90,11 +105,6 @@ const routes = [
         path: "update",
         name: 'update',
         component: () => import("@/components/member/UpdateVue"),
-      },
-      {
-        path: "password",
-        name: 'password',
-        component: () => import("@/components/member/PasswordVue"),
       },
     ],
   },

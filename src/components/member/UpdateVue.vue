@@ -15,37 +15,32 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="text-black" for="id">아이디</label>
-                                        <input type="text" class="form-control" id="id"
-                                        readonly ref="refId">
+                                        <input type="text" class="form-control" id="id" readonly ref="refId">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="pw">비밀번호</label>
-                                        <input type="text" class="form-control" id="pw"
-                                        ref="refPw">
+                                        <input type="text" class="form-control" id="pw" ref="refPw">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="name">이름</label>
-                                        <input type="text" class="form-control" id="name"
-                                        ref="refName">
+                                        <input type="text" class="form-control" id="name" ref="refName">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="addr">주소</label>
-                                        <input type="text" class="form-control" id="addr"
-                                        ref="refAddr">
+                                        <input type="text" class="form-control" id="addr" ref="refAddr">
                                     </div>
                                     <div class="form-group">
                                         <label class="text-black" for="phone">전화번호</label>
-                                        <input type="text" class="form-control" id="phone"
-                                        ref="refPhone">
+                                        <input type="text" class="form-control" id="phone" ref="refPhone">
                                     </div>
                                 </div>
                             </div>
-                                <button id="btn-update" @click="updateMember" class="btn btn-primary mb-4" >
-                                    수정
-                                </button>
-                            
-                            <router-link to="/member/mypage"> 
-                            <button type="button" class="btn btn-primary mb-4">돌아가기</button>
+                            <button id="btn-update" @click="updateMember" class="btn btn-primary mb-4">
+                                수정
+                            </button>
+
+                            <router-link to="/member/mypage">
+                                <button type="button" class="btn btn-primary mb-4">돌아가기</button>
                             </router-link>
                         </form>
                     </div> <!-- /.col-lg-7 -->
@@ -58,18 +53,18 @@
 <script>
 export default {
     name: "UpdateVue",
-    data: function() {
+    data: function () {
         return {
             member: {
-                
+
             }
         }
     },
-    created: function() {
+    created: function () {
         this.getMember()
     },
     methods: {
-        getMember: function() {
+        getMember: function () {
             this.$axios.get(`http://localhost/admin/member/${this.$session.get("session").id}`)
                 .then(response => {
                     this.member = response.data
@@ -82,11 +77,10 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-                
+
         },
 
         updateMember: function (e) {
-            // this.validationCheck();
             e.preventDefault();
             this.$axios.put('http://localhost/admin/member', {
                 id: this.$refs.refId.value,
@@ -105,7 +99,7 @@ export default {
                     console.log(error)
                 })
         },
-    
+
     }
 }
 </script>

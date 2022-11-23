@@ -1,23 +1,24 @@
 <template>
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <a href="#" class="feature-v2 d-flex">
-                <div class="icon-wrap">
-                    <span class="icon-chat_bubble_outline"></span>
-                </div>
-                <div class="text">
-                    <h3 class="heading">{{ article.subject }}</h3>
-                    <p>{{ article.content }}</p>
-                </div>
-            </a> <!-- /.feature-v2 -->
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <router-link :to="`/board/noticeview/${article.articleno}`" class="feature-v2 d-flex">
+            <div class="icon-wrap">
+                <span class="icon-chat_bubble_outline"></span>
+            </div>
+            <div class="text">
+                <h3 class="heading">{{ article.subject }}</h3>
+                <p>{{ article.content }}</p>
+            </div>
+        </router-link>
+        <!-- </a>  -->
         <br>
-        </div> <!-- /.col-lg-6 -->
+    </div> <!-- /.col-lg-6 -->
 </template>
 
 <script>
 export default {
     name: "BoardNoticeItem",
     props: {
-    article: Object,
+        article: Object,
     },
 };
 </script>

@@ -9,81 +9,57 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5 bg-white p-5">
-                        <form id="form-update" class="contact-form" data-aos="fade-up" data-aos-delay="200"
-                            action="" method="post">
+                        <form id="form-update" class="contact-form" data-aos="fade-up" data-aos-delay="200" action=""
+                            method="post">
                             <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="text-black" for="id">아이디</label>
-                                            <div>
-                                                {{member.id}}
-                                            </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="text-black" for="id">아이디</label>
+                                        <div>
+                                            {{ member.id }}
                                         </div>
-                                        <div class="form-group">
-                                            <label class="text-black" for="password">비밀번호</label>
-                                            <div>
-                                                {{member.pw}}
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-black" for="password">비밀번호</label>
+                                        <div>
+                                            {{ member.pw }}
                                         </div>
-                                        <div class="form-group">
-                                            <label class="text-black" for="name">이름</label>
-                                            <div>
-                                                {{member.name}}
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-black" for="name">이름</label>
+                                        <div>
+                                            {{ member.name }}
                                         </div>
-                                        <div class="form-group">
-                                            <label class="text-black" for="address">주소</label>
-                                            <div>
-                                                {{member.addr}}
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-black" for="address">주소</label>
+                                        <div>
+                                            {{ member.addr }}
                                         </div>
-                                        <div class="form-group">
-                                            <label class="text-black" for="phone">전화번호</label>
-                                            <div>
-                                                {{member.phone}}
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-black" for="phone">전화번호</label>
+                                        <div>
+                                            {{ member.phone }}
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="accordion" id="accordion_1">
-                                    <div class="accordion-item">
-                                        <router-link to="/member/update">
-                                            <button id="btn-update" class="btn btn-primary mb-4">
-                                                수정
-                                            </button>
-                                        </router-link>
-
-                                        <!-- 탈퇴 버튼 -->
-                                        <button id="btn-delete" @click="deleteMember" class="btn btn-primary mb-4" >
-                                            삭제
+                            <div class="accordion" id="accordion_1">
+                                <div class="accordion-item">
+                                    <router-link to="/member/update">
+                                        <button id="btn-update" class="btn btn-primary mb-4">
+                                            수정
                                         </button>
-                                        <!--data-toggle="collapse"
-                                            data-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne" -->
+                                    </router-link>
 
-                                        <!-- <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                            data-parent="#accordion_1">
-                                            <div class="accordion-body">
-                                                <label class="text-black">정말 탈퇴하시겠습니까?</label>
-                                                <nav class="site-nav">
-                                                    <div class="container">
-                                                        <div class="site-navigation">
-                                                            <ul
-                                                                class="js-clone-nav d-none d-lg-inline-block text-left float-right site-menu">
-                                                                <li><a
-                                                                        href="${root}/member/delete?id=${member.getId()}">예</a>
-                                                                </li>
-                                                                <li><a href="#" data-toggle="collapse"
-                                                                        data-target="#collapseOne">아니오</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </nav>
-                                            </div>
-                                        </div> -->
-                                    </div>
+                                    <!-- 탈퇴 버튼 -->
+                                    <button id="btn-delete" @click="deleteMember" class="btn btn-primary mb-4">
+                                        삭제
+                                    </button>
                                 </div>
+                            </div>
                         </form>
                     </div> <!-- /.col-lg-7 -->
                 </div> <!-- /.row -->

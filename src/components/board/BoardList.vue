@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-6">
-                        <h2 class="text-secondary heading-2">게시글 목록</h2>
+                        <h2 class="text-secondary heading-2">동네 생활</h2>
                         <p>
                             <br>
                         </p>
@@ -32,11 +32,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <board-list-item v-for="article in articles" :key="article.articleno" :article="article"></board-list-item>
+                            <board-list-item v-for="article in articles" :key="article.articleno" :article="article">
+                            </board-list-item>
                         </tbody>
                     </table>
                 </div>
-                    <div class="text-center" v-else>게시글이 없습니다.</div>
+                <div class="text-center" v-else>게시글이 없습니다.</div>
             </div>
         </div>
     </div>
@@ -48,7 +49,7 @@ import BoardListItem from "@/components/board/BoardListItem";
 export default {
     name: "BoardList",
     components: {
-    BoardListItem,
+        BoardListItem,
     },
     data() {
         return {

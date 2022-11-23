@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row justify-content-center text-center mb-5">
                     <div class="col-lg-6">
-                        <h2 class="text-secondary heading-2">게시글 수정</h2>
+                        <h2 class="text-secondary heading-2">알짜 정보 게시판 수정</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -26,8 +26,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- </form> -->
                     </div>
                     <!-- /.col-lg-7 -->
                 </div>
@@ -59,22 +57,22 @@ export default {
             let err = true;
             let msg = "";
             !this.article.id &&
-                ((msg = "아이디를 입력해주세요."),
+                ((msg = "작성자를 입력해주세요"),
                     (err = false),
                     this.$refs.id.focus());
             err &&
                 !this.article.subject &&
-                ((msg = "제목을 입력해주세요."),
+                ((msg = "제목을 입력해주세요"),
                     (err = false),
                     this.$refs.subject.focus());
             err &&
                 !this.article.content &&
-                ((msg = "내용을 입력해주세요."),
+                ((msg = "내용을 입력해주세요"),
                     (err = false),
                     this.$refs.content.focus());
 
             if (!err) alert(msg);
-            // 만약 내용이 다 입력되어 있다면 호출
+            // 만약, 내용이 다 입력되어 있다면 호출
             else this.modifyArticle();
         },
         modifyArticle() {
@@ -82,14 +80,14 @@ export default {
             // TODO : 글번호에 해당하는 글정보 수정.
             this.$axios.put("http://localhost/board", this.article).then(({ data }) => {
                 let msg = "수정 처리 중 문제가 발생하였습니다.";
-                if (data === "success") msg = "수정 되었습니다.";
+                if (data === "success") msg = "수정 성공하였습니다.";
                 alert(msg);
                 this.moveList();
             });
         },
 
         moveList() {
-            this.$router.push({ name: "boardlist" });
+            this.$router.push({ name: "boardnotice" });
         },
     },
 };

@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row justify-content-center text-center mb-5">
                     <div class="col-lg-7">
-                        <h2 class="text-secondary heading-2">글 상세보기</h2>
+                        <h2 class="text-secondary heading-2">알짜 정보 상세보기</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -31,19 +31,19 @@
 
                         <div class="accordion" id="accordion_1">
                             <div class="accordion-item text-center">
-                                <router-link v-if="this.$session.get('session').id == article.id" :to="{
-                                    name: 'boardmodify',
+                                <router-link v-if="this.$session.get('session').id == `admin`" :to="{
+                                    name: 'noticemodify',
                                     params: { articleno: article.articleno },
                                 }" class="btn btn-primary mb-4">수정
                                 </router-link>
                                 &nbsp;
-                                <router-link v-if="this.$session.get('session').id == article.id" :to="{
-                                    name: 'boarddelete',
+                                <router-link v-if="this.$session.get('session').id == `admin`" :to="{
+                                    name: 'noticedelete',
                                     params: { articleno: article.articleno },
                                 }" class="btn btn-primary mb-4">삭제
                                 </router-link>
                                 &nbsp;
-                                <router-link :to="{ name: 'boardlist' }" class="btn btn-primary mb-4">목록</router-link>
+                                <router-link :to="{ name: 'boardnotice' }" class="btn btn-primary mb-4">목록</router-link>
                             </div>
                         </div>
                     </div> <!-- /.col-lg-7 -->

@@ -10,11 +10,11 @@
                         </div>
                     </div>
                 </div>
-            <div v-if="admin == true">    
-                <div style="text-align: center">
-                    <button @click="moveWrite" class="btn btn-primary mb-4" >글작성</button>
+                <div v-if="admin == true">
+                    <div style="text-align: center">
+                        <button @click="moveWrite" class="btn btn-primary mb-4">글작성</button>
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="untree_co-section">
                 <div class="container">
@@ -47,7 +47,6 @@ export default {
         if (this.$session.get('session').id != `admin`) {
             this.admin = false;
         }
-        // this.admin = this.$session.get('session') == 'admin'
         this.$axios.get(`http://localhost/board/notice`).then(({ data }) => (this.articles = data));
     },
     methods: {
