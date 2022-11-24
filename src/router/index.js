@@ -4,7 +4,6 @@ import IndexView from '../views/IndexView.vue'
 import AptCostView from '../views/AptCostView.vue'
 import AppMember from '../views/AppMember.vue'
 import AppBoard from '../views/AppBoard.vue'
-import AptDetailFormView from '../views/AptDetailFormView.vue'
 
 Vue.use(VueRouter)
 
@@ -18,11 +17,6 @@ const routes = [
     path: '/aptcost',
     name: 'aptcost',
     component: AptCostView
-  },
-  {
-    path: '/aptdetailform',
-    name: 'aptdetailform',
-    component: AptDetailFormView
   },
   {
     path: '/board',

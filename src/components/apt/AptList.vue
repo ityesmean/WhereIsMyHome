@@ -44,19 +44,14 @@
                       <label style="font-size: 20px; padding-right:10px">1층 제외
                         <input type="checkbox" v-model="selected" id="excludingFirst" value="excludingFirst" style="zoom:1.3;"> 
                       </label>
-                      <!-- <label style="font-size: 20px; padding-right:10px">현위치 주변
+                      <label style="font-size: 20px; padding-right:10px">현위치 주변
                         <input type="checkbox" v-model="selected" id="curPos" value="curPost" style="zoom:1.3;"> 
-                      </label> -->
+                      </label>
                       <div class="form-group col-md-2" style="align:center;">
                           <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
                             조회
                           </button>
                       </div>
-
-                        <!-- <div class="form-group col-md-2">
-                            <button type="button" id="favorite-btn" class="btn btn-primary mb-4">
-                              관심</button>
-                        </div> -->
                     </div>
                 </form>
                 <div>
@@ -65,7 +60,6 @@
                     <div v-show="!first">검색결과가 없습니다.</div>
                   </div>
                   <div id="map" style="width: 1100px; height: 400px;" v-show="apts"></div>
-                  <!-- <div id="map" style="width: 1100px; height: 400px;"></div> -->
                   <div v-show="apts" style="width: 1100px; height: 400px; overflow: auto">
                       <table class="table table-hover text-center">
                           <tr>
@@ -89,7 +83,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import AptListItem from "@/components/apt/AptListItem.vue"
 
 export default {
@@ -154,48 +147,13 @@ export default {
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
 
-
-      //지도 객체를 등록합니다.
-      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
-      // this.map = new kakao.maps.Map(container, options);
-
-      // var map = new kakao.maps.Map(container, options);
-
-      // if (navigator.geolocation) {
-      //   // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      //   navigator.geolocation.getCurrentPosition(function(position) {
-            
-      //       var lat = position.coords.latitude, // 위도
-      //           lon = position.coords.longitude; // 경도
-            
-      //       console.log(lat, lon);
-            
-      //       var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-      //           // message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
-      //       map.setCenter(locPosition);     
-      //       // 마커와 인포윈도우를 표시합니다
-      //       // this.displayMarker(locPosition, message);
-                
-      //     });
-      // } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-          // var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-              // message = 'geolocation을 사용할수 없어요..'
-              // map.setCenter(locPosition);     
-              // console.log(message)
-          // this.displayMarker(locPosition, message);
-      // }
-
-      // this.map = map;
       
     },
     makeMarker() {
       this.initMap();
-      // var cnt = 0;
       let coords;
       let aptSet = new Set();
       for (let apt of this.apts) {
-        // console.log(apt)
-        // console.log(apt.lat + ", " + apt.lng)
         let ltlg = apt.lat + ", " + apt.lng;
         if (aptSet.has(ltlg)) continue;
         aptSet.add(ltlg)
@@ -208,7 +166,6 @@ export default {
         var markerImg = new kakao.maps.MarkerImage(imgSrc, imgSize, imgOption),
         markerPosition = new kakao.maps.LatLng(apt.lat, apt.lng); // 마커가 표시될 위치입니다
 
-        // let markerPosition  = new kakao.maps.LatLng(apt.lat, apt.lng); 
         let marker = new kakao.maps.Marker({
           map: this.map,
           position: markerPosition,
@@ -297,37 +254,12 @@ export default {
     getAptList() {
       console.log(this.dongregcode)
       const url = `http://localhost/home/aptlist/${this.dongregcode}/${this.selected}/${this.sort}`;
-      // const failed = document.getElementById("failed");
-      // const container = document.getElementById("map");
-      // try {
-        this.$axios.get(url)
-          .then(response => this.apts = response.data)
-          .then(() => this.makeMarker())
-          .then(this.first = false)
-          // .then(console.log("selected: " + this.selected))
-          // .then(console.log("sort: " + this.sort))
-          // .then(() => {
-          //   failed.style.display = '';
-          //   container.style.display = '';
-          // })
-          // .then(console.log("apts: " + this.apts))
-      // } catch {
-      //   container.style.display = 'none';
-      //   failed.style.display = '';
-      // }
-      // failed.style.display = '';
+      this.$axios.get(url)
+        .then(response => this.apts = response.data)
+        .then(() => this.makeMarker())
+        .then(this.first = false)
     },
-    // TODO 현위치로 집주변 구하기
-    // 좌표로 현위치 구하기 -> https://apis.map.kakao.com/web/sample/coord2addr/
-    // 지도 예쁘게 개선 -> https://apis.map.kakao.com/web/sample/keywordList/
-    
   }
-
-  // created() {
-  //   const serviceKey = "eE7PGNUbEMWVo1p6YJHhd%2BYFWOWanb055uXd5H9gCpAoYc6DUWTRfrSQeO6Gsi4%2FYLa7GYXlrVPXq549o88okg%3D%3D";
-  //   const url = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}&pageNo=1&numOfRows=10&LAWD_CD=${this.lawdCd}&DEAL_YMD=${this.dealYmd}`;
-  //   axios.get(url).then(response => (this.apts = console.log(response.data.response.body.items.item)));
-  // }
 }
 </script>
 
