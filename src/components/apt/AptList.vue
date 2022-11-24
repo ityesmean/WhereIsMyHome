@@ -44,9 +44,9 @@
                       <label style="font-size: 20px; padding-right:10px">1층 제외
                         <input type="checkbox" v-model="selected" id="excludingFirst" value="excludingFirst" style="zoom:1.3;"> 
                       </label>
-                      <label style="font-size: 20px; padding-right:10px">현위치 주변
+                      <!-- <label style="font-size: 20px; padding-right:10px">현위치 주변
                         <input type="checkbox" v-model="selected" id="curPos" value="curPost" style="zoom:1.3;"> 
-                      </label>
+                      </label> -->
                       <div class="form-group col-md-2" style="align:center;">
                           <button v-on:click="getAptList" type="button" id="list-btn" class="btn btn-primary mb-4">
                             조회
